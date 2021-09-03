@@ -16,4 +16,13 @@ echo local build
 poetry build
 
 echo commit version
-git add pyproject.toml
+git commit --all --message "version ${version}"
+
+echo version tag
+git tag "${version}"
+
+echo push commmit
+git push --all
+
+echo push tags
+git push --tags
