@@ -1,10 +1,12 @@
 #!/bin/bash
 
+build=${1:-patch}
+
 echo version patch
-poetry version patch
+poetry version ${build}
 version=$(poetry version --short)
 
-echo new version: ${version}
+echo new ${build} version: ${version}
 
 echo update and lock
 poetry update --lock
