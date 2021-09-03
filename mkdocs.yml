@@ -9,13 +9,14 @@ repo_name: GitHub
 edit_uri: 'edit/main/docs/'
 
 # theme
-theme:
-  name: 'material'
-  palette:
-    primary: 'teal'
-    accent: 'amber'
-  icon:
-    logo: material/yin-yang
+theme: mkdocs
+#theme:
+#  name: 'material'
+#  palette:
+#    primary: 'teal'
+#    accent: 'amber'
+#  icon:
+#    logo: material/yin-yang
 
 # extensions
 markdown_extensions:
