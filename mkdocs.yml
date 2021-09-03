@@ -1,10 +1,31 @@
 site_name: Moose Tools
 site_description: Moose tools Docs
+site_author: Chuck Mo
+copyright: GPLv3
 repo_url: https://github.com/TheChuckMo/moose
 
+# site_url:
+# edit_uri: 'browse/docs/'
+
+# theme
 theme:
-  name: "material"
+  name: 'material'
+  palette:
+    primary: 'teal'
+    accent: 'amber'
+  icon:
+    logo: material/yin-yang
+
+# extensions
+markdown_extensions:
+  - meta
+  - codehilite
+  - smarty
+  - sane_lists
 
 plugins:
   - search
-  - mkdocstrings
+  - autorefs
+  - mkdocstrings:
+      watch:
+        - moose

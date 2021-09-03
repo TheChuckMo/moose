@@ -1,17 +1,10 @@
-# Welcome to MkDocs
+# Chuck's Moose Tools
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+## [Connect Object](connect.md)
 
-## Commands
+A generic connection object that always returns json for interacting with an API.
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+```python
+from moose.connect import AppConnect
+cnt = AppConnect('https://smoawx.ohsu.edu', username='user', password='pass')
+```
