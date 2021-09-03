@@ -2,7 +2,7 @@
 
 echo version patch
 poetry version patch
-version=$(poetry version)
+version=$(poetry version --short)
 
 echo new version: ${version}
 
