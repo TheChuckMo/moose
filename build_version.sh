@@ -22,6 +22,9 @@ echo == new ${build} version: ${version}
 echo == update and lock
 poetry update --lock
 
+echo == pytest
+poetry run pytest -v
+
 echo == export requirements.txt
 poetry export > requirements.txt
 
