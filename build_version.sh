@@ -8,11 +8,12 @@ case $build in
     ;;
   *)
     echo == build ${build} INVALID
+    echo valid: patch, minor, major, prepatch, preminor, premajor, prerelease
     exit 1
     ;;
 esac
 
-echo == version patch
+echo == version ${build}
 poetry version ${build}
 version=$(poetry version --short)
 
