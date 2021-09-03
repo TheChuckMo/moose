@@ -1,0 +1,10 @@
+site_name: Moose Tools
+site_description: Moose tools Docs
+repo_url: https://github.com/TheChuckMo/moose
+
+theme:
+  name: "material"
+
+plugins:
+  - search
+  - mkdocstrings

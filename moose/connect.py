@@ -1,3 +1,5 @@
+"""moose connect"""
+
 import base64
 import json
 import os
@@ -7,6 +9,23 @@ from json.decoder import JSONDecodeError
 import requests
 from requests.auth import HTTPBasicAuth
 from requests_toolbelt.sessions import BaseUrlSession
+
+"""default cookie store"""
+DEFAULT_COOKIE_STORE = os.getcwd()
+
+"""default json headers"""
+json_headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+}
+
+form_headers = {
+    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+}
+
+no_check_headers = {
+    'X-Atlassian-Token': 'no-check'
+}
 
 
 class AppConnect:
@@ -30,8 +49,9 @@ class AppConnect:
     _response: requests = None
     cookie_store: os.path = None
 
-    def __init__(self, server: str, username: str = None, password: str = None, cookie_store: os.path = None,
-                 session_headers: dict = None) -> None:
+    def __init__(self, server: str, username: str = None, password: str = None,
+                 cookie_store: os.path = DEFAULT_COOKIE_STORE,
+                 session_headers: dict = json_headers) -> None:
         self.server = server
         self.session = BaseUrlSession(base_url=server)
 
