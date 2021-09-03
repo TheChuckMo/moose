@@ -2,6 +2,16 @@
 
 build=${1:-patch}
 
+case $build in
+  patch|minor|major|prepatch|preminor|premajor|prerelease)
+    echo build ${build}
+    ;;
+  *)
+    echo build ${build} INVALID
+    exit 1
+    ;;
+esac
+
 echo version patch
 poetry version ${build}
 version=$(poetry version --short)
