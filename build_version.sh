@@ -27,11 +27,14 @@ poetry run pytest -v
 
 echo == export requirements.txt
 poetry export > requirements.txt
+poetry export --dev > dev-requirements.txt
 
 echo == local build
 poetry build
 
 echo == commit version
+git add requirements.txt
+git add dev-requirements.txt
 git commit --all --message "version ${version}"
 
 echo == version tag

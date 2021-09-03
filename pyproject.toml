@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "moosetools"
-version = "0.5.3"
+version = "0.5.4"
 description = "Moose Tools"
 license = "LGPL-3.0-or-later"
 authors = ["Chuck Mo <chuck@moosejudge.com>"]
