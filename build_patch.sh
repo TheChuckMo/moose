@@ -14,3 +14,6 @@ poetry export > requirements.txt
 
 echo local build
 poetry build
+
+echo commit version
+git add pyproject.toml
