@@ -1,4 +1,4 @@
-from moose.connect import AppConnect
+from moosetools.connect import AppConnect
 
 
 def test_appconnect():

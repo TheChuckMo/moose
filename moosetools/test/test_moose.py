@@ -1,4 +1,4 @@
-from moose import __version__, __app__
+from moosetools import __version__, __app__
 
 import pkg_resources
 
