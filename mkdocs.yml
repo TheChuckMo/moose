@@ -9,7 +9,7 @@ repo_name: GitHub
 edit_uri: 'edit/main/docs/'
 
 # theme
-theme: mkdocs
+theme: readthedocs
 #theme:
 #  name: 'material'
 #  palette:
@@ -30,4 +30,4 @@ plugins:
   - autorefs
   - mkdocstrings:
       watch:
-        - moose
+        - moosetools

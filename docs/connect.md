@@ -5,7 +5,7 @@
 ## Create connect
 
 ```python
-from moose.connect import AppConnect
+from moosetools.connect import AppConnect
 cnt = AppConnect('https://smoawx.ohsu.edu', username='user', password='pass')
 ```
 
@@ -14,7 +14,7 @@ cnt = AppConnect('https://smoawx.ohsu.edu', username='user', password='pass')
 ```python
 cnt.get('/api/path')
 ```
-::: moose.connect.AppConnect.get
+::: moosetools.connect.AppConnect.get
     handler: python
     rendering:
       heading_level: 3
@@ -26,7 +26,7 @@ cnt.get('/api/path')
 ```python
 cnt.put('/api/path')
 ```
-::: moose.connect.AppConnect.put
+::: moosetools.connect.AppConnect.put
     handler: python
     rendering:
       heading_level: 3
@@ -38,7 +38,7 @@ cnt.put('/api/path')
 ```python
 cnt.post('/api/path')
 ```
-::: moose.connect.AppConnect.post
+::: moosetools.connect.AppConnect.post
     handler: python
     rendering:
       heading_level: 3
@@ -50,7 +50,7 @@ cnt.post('/api/path')
 ```python
 cnt.delete('/api/path')
 ```
-::: moose.connect.AppConnect.delete
+::: moosetools.connect.AppConnect.delete
     handler: python
     rendering:
       heading_level: 3
@@ -62,7 +62,7 @@ cnt.delete('/api/path')
 ```python
 cnt.cache_cookies()
 ```
-::: moose.connect.AppConnect.cache_cookies
+::: moosetools.connect.AppConnect.cache_cookies
     handler: python
     rendering:
       heading_level: 3
@@ -74,7 +74,7 @@ cnt.cache_cookies()
 ```python
 cnt.update_cookies()
 ```
-::: moose.connect.AppConnect.update_cookies
+::: moosetools.connect.AppConnect.update_cookies
     handler: python
     rendering:
       heading_level: 3
@@ -86,7 +86,7 @@ cnt.update_cookies()
 ```python
 cnt.reload_cookies()
 ```
-::: moose.connect.AppConnect.reload_cookies
+::: moosetools.connect.AppConnect.reload_cookies
     handler: python
     rendering:
       heading_level: 3

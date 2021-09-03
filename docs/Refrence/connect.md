@@ -1,6 +1,6 @@
 # Connect Object API
 
-::: moose.connect.AppConnect
+::: moosetools.connect.AppConnect
     handler: python
     rendering:
       show_root_heading: true
