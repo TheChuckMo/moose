@@ -1,11 +1,13 @@
 [tool.poetry]
 name = "moose"
 version = "0.1.0"
-description = ""
-authors = ["Charles Moreland <morelanc@ohsu.edu>"]
+description = "Moose Tools"
+authors = ["Chuck Mo <chuck@moosejudge.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
+requests = "^2.26.0"
+requests-toolbelt = "^0.9.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
