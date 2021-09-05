@@ -11,9 +11,9 @@ readme = "README.md"
 classifiers = [ "Topic :: Software Development :: Libraries :: Python Modules" ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.6.9"
 requests = "^2"
-requests-toolbelt = "^0.9"
+requests-toolbelt = "^0.9.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5"

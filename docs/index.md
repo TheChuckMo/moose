@@ -1,6 +1,6 @@
 # Chuck's Moose Tools
 
-## [Connect Object](connect.md)
+## [Connect](connect/index.md)
 
 A generic connection object that always returns json for interacting with an API.
 

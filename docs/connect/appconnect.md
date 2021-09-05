@@ -1,6 +1,6 @@
 # Connect Object
 
-- Connect Object will always return a JSON
+- Connect Object will always return the response object with JSON
 
 ## Create connect
 
