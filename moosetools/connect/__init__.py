@@ -1,57 +1,21 @@
 """moose connect"""
 
-import base64
-import json
 import os
 import pickle
-from json.decoder import JSONDecodeError
 
 import requests
-from requests.auth import HTTPBasicAuth
-from requests_toolbelt.sessions import BaseUrlSession
+from requests_toolbelt import user_agent
 
+from moosetools import __app__, __version__
 from moosetools.connect.headers import json_content_accept as _default_headers_
+from moosetools.connect.response import AppResponse
+from moosetools.connect.sessions import BaseUrlSession
 
 """default directory to store cookies and other cache"""
-_default_store_ = os.getcwd()
+_default_store_: os.path = os.getcwd()
 
-
-class AppResponse:
-    response: requests.Response
-    _json: dict = None
-
-    def __init__(self, response: requests):
-        self.response = response
-
-    def __str__(self):
-        self.json
-
-    @property
-    def ok(self):
-        """status of response"""
-        if self.response.ok:
-            return self.response.ok
-
-        return False
-
-    @property
-    def status_code(self):
-        """the status code"""
-        if self.response.status_code:
-            return self.response.status_code
-
-        return '000'
-
-    @property
-    def json(self):
-        """Clean JSON object"""
-        if not self._json:
-            try:
-                self._json = self.response.json()
-            except JSONDecodeError as err:
-                SystemExit(err)
-
-        return json.dumps(self._json)
+"""user-agent for connection"""
+_user_agent_header: dict = {'User-Agent': user_agent(__app__, __version__)}
 
 
 class AppConnect:
@@ -61,28 +25,25 @@ class AppConnect:
 
     """
     _base_url: str
-    _username: str
-    _password: str
-    _headers: _default_headers_
-    _store: _default_store_
-    _response: requests = None
-    _session: requests = None
+    _auth: (str, dict) = None
+    _headers: dict = _default_headers_
+    _store: os.path = _default_store_
+    _response: requests.Response = None
+    _session: requests.session = None
+    _cookies: dict = dict()
 
-    def __init__(self, base_url: str, username: str = None, password: str = None, headers: dict = None,
-                 store: str = None) -> None:
-        self.base_url = base_url
+    def __init__(self, base_url: str, auth: str = None, headers: dict = _default_headers_,
+                 store: os.path = _default_store_) -> None:
+        self._base_url = base_url
 
-        if username:
-            self.username = username
+        if auth is not None:
+            self._auth = auth
 
-        if password:
-            self.password = password
+        if store is not None:
+            self._store = store
 
-        if store:
-            self.store = store
-
-        if headers:
-            self.headers = headers
+        if headers is not None:
+            self._headers = headers
 
         self.reload_cookies()
 
@@ -98,27 +59,13 @@ class AppConnect:
             self.session.base_url = base_url
 
     @property
-    def username(self) -> str:
-        """username for connection"""
-        return self._username
-
-    @username.setter
-    def username(self, username: str):
-        self._username = username
-
-    @property
-    def password(self) -> str:
-        """password for connection."""
-        return self._password
-
-    @password.setter
-    def password(self, password: str):
-        self._password = base64.encodebytes(password.encode())
-
-    @property
-    def auth(self) -> HTTPBasicAuth:
+    def auth(self) -> object:
         """basic authentication for requests"""
-        return HTTPBasicAuth(self.username, base64.decodebytes(self.password).decode())
+        return self._auth
+
+    @auth.setter
+    def auth(self, auth):
+        self._auth = auth
 
     @property
     def headers(self) -> dict:
@@ -132,11 +79,11 @@ class AppConnect:
     @property
     def store(self) -> str:
         """store directory for cookies and other cache"""
-        return os.path.abspath(self._store)
+        return self._store
 
     @store.setter
-    def store(self, store: str):
-        self._store = store
+    def store(self, store: os.path):
+        self._store = os.path.abspath(store)
 
     @property
     def cookie_store(self) -> str:
@@ -146,7 +93,11 @@ class AppConnect:
     @property
     def session(self) -> BaseUrlSession:
         """session object"""
-        return BaseUrlSession(base_url=self.base_url)
+        if not self._session:
+            self._session = BaseUrlSession(base_url=self.base_url)
+            self._session.headers.update(_user_agent_header)
+
+        return self._session
 
     def get(self, api, headers: dict = None, params: dict = None, data: dict = None, auth: bool = False,
             allow_redirects=True) -> AppResponse:
@@ -298,24 +249,25 @@ class AppConnect:
 
         return AppResponse(response=response)
 
-    def update_cookies(self, cookies: dict = None):
-        """add cookie(s) to cookie jar.
-
-        Parameters
-        ----------
-        cookies
-        """
-        self.session.cookies.update(cookies)
-        self.cache_cookies()
-
     def cache_cookies(self):
         """cache cookies to file."""
         if self.session.cookies:
+            self._cookies = self.session.cookies
             with open(self.cookie_store, 'wb') as f:
-                pickle.dump(self.session.cookies, f)
+                pickle.dump(self._cookies, f)
 
     def reload_cookies(self):
         """reload cookies from file."""
         if os.path.isfile(self.cookie_store):
             with open(self.cookie_store, 'rb') as f:
-                self.session.cookies.update(pickle.load(f))
+                self._cookies = pickle.load(f)
+            self.update_cookies()
+
+    def update_cookies(self, cookies: dict = None):
+        """add cookie(s) to cookie jar.
+        Parameters
+        ----------
+        cookies
+        """
+        self.session.cookies.update(self._cookies)
+        self.cache_cookies()
