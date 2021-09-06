@@ -1,7 +1,8 @@
 import pytest
 import os
 
-from moosetools.connect import AppConnect, headers, _default_store_, _default_headers_
+from moosetools.connect import connect_json_app, _default_store_, __app__
+from moosetools.connect.sessions import _default_cookies_ext_
 
 
 @pytest.fixture
@@ -9,8 +10,8 @@ def apidata():
     return {
         "connect": {
             "base_url": "https://api.dictionaryapi.dev/api/v2/",
-            "auth": None,
-            "headers": headers.json_content_accept,
+            "username": None,
+            "password": None,
             "store": _default_store_
         }
     }
@@ -18,14 +19,13 @@ def apidata():
 
 @pytest.fixture
 def connect(apidata):
-    return AppConnect(**apidata['connect'])
+    return connect_json_app(**apidata['connect'])
 
 
 def test_AppConnect(connect, apidata):
     assert connect.base_url == apidata['connect']['base_url']
-    assert connect.headers == apidata['connect']['headers']
     assert connect.store == apidata['connect']['store']
-    assert connect.cookie_store == os.path.join(connect.store, '.cookies')
+    assert connect.cookie_store == os.path.join(connect.store, f'.{__app__}{_default_cookies_ext_}')
 
 
 def test_AppConnect_get(connect):
