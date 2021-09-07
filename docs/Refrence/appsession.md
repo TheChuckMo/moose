@@ -1,6 +1,6 @@
-# Response Object API
+# class AppSession
 
-::: moosetools.connect.AppResponse
+::: moosetools.connect.sessions.AppSession
     handler: python
     rendering:
       show_root_heading: true

@@ -193,3 +193,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+!/.moosetools.session
+!/.envrc

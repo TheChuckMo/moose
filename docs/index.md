@@ -5,6 +5,6 @@
 A generic connection object that always returns json for interacting with an API.
 
 ```python
-from moose.connect import AppConnect
-cnt = AppConnect('https://smoawx.ohsu.edu', username='user', password='pass')
+from moosetools.connect import connect_json_app
+cnt = connect_json_app('https://smoawx.ohsu.edu', username='user', password='pass')
 ```
