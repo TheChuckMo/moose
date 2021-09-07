@@ -348,11 +348,11 @@ six = ">=1.5"
 
 [[package]]
 name = "pytkdocs"
-version = "0.11.1"
+version = "0.11.0"
 description = "Load Python objects documentation."
 category = "dev"
 optional = false
-python-versions = ">=3.6.1,<4.0.0"
+python-versions = ">=3.6,<4.0"
 
 [package.dependencies]
 astunparse = {version = ">=1.6.3,<2.0.0", markers = "python_version < \"3.9\""}
@@ -473,8 +473,8 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.6.9"
-content-hash = "29ca17651ba17f95ddb691ec5eba8248b3136678ab7c8ab6168ea473a264f080"
+python-versions = "^3.6"
+content-hash = "209fdd6380bbfb17c6b1b78034959d8e10be07e51f31bf43a0e2058e625e7d48"
 
 [metadata.files]
 astunparse = [
@@ -649,8 +649,8 @@ python-dateutil = [
     {file = "python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},
 ]
 pytkdocs = [
-    {file = "pytkdocs-0.11.1-py3-none-any.whl", hash = "sha256:89ca4926d0acc266235beb24cb0b0591aa6bf7adedfae54bf9421d529d782c8d"},
-    {file = "pytkdocs-0.11.1.tar.gz", hash = "sha256:1ec7e028fe8361acc1ce909ada4e6beabec28ef31e629618549109e1d58549f0"},
+    {file = "pytkdocs-0.11.0-py3-none-any.whl", hash = "sha256:8fb46adc1416fbeafebc3ea6f2adbf71efec2ff5d651a3f82801f0b6514703c2"},
+    {file = "pytkdocs-0.11.0.tar.gz", hash = "sha256:e63ec71dc5e9feabc672f862f04394abd26557c7831c25cb8a60c99af36693b9"},
 ]
 pyyaml = [
     {file = "PyYAML-5.4.1-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:3b2b1824fe7112845700f815ff6a489360226a5609b96ec2190a45e62a9fc922"},

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "moosetools"
-version = "0.6.0"
+version = "0.6.1"
 description = "Moose Tools"
 license = "LGPL-3.0-or-later"
 authors = ["Chuck Mo <chuck@moosejudge.com>"]
@@ -11,7 +11,7 @@ readme = "README.md"
 classifiers = [ "Topic :: Software Development :: Libraries :: Python Modules" ]
 
 [tool.poetry.dependencies]
-python = "^3.6.9"
+python = "^3.6"
 requests = "^2"
 requests-toolbelt = "^0.9.1"
 

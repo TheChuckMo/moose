@@ -19,9 +19,9 @@ gorest_api_connect_string = {
 }
 
 
-# def pytest_addoption(parser):
-#     parser.addoption("--scenario", action="store", type=str, default='free_dictionary_api',
-#                      help=f'scenario to test: {scenarios.keys()}')
+def pytest_addoption(parser):
+    parser.addoption("--scenario", action="store", type=str, default='free_dictionary_api',
+                     help=f'scenario to test: {scenarios.keys()}')
 
 
 # def pytest_generate_tests(metafunc):
