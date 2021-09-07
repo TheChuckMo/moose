@@ -68,7 +68,7 @@ def connect_json_app(base_url: str, username: str = None, password: str = None, 
     """add session cookies"""
     if (session_cookies is not None) and (len(session_cookies) > 0):
         _session.cookies.update(session_cookies)
-        print(f'add session cookies: {_session.cookies.get_dict()}')
+        logger.debug(f'add session cookies: {_session.cookies.get_dict()}')
 
     """session keys in headers or params to save"""
     if (session_keys is not None) and (type(session_keys) is list):
@@ -84,9 +84,9 @@ def connect_json_app(base_url: str, username: str = None, password: str = None, 
             _session.headers.update({'Authentication': f'Basic {_basic_auth}'})
             logger.debug(f'force basic auth for {username}')
 
-    print(f'init session params: {_session.params}')
-    print(f'init session headers: {_session.headers}')
-    print(f'init session cookies: {_session.cookies.get_dict()}')
+    logger.info(f'init session params: {_session.params}')
+    logger.info(f'init session headers: {_session.headers}')
+    logger.info(f'init session cookies: {_session.cookies.get_dict()}')
     """add cache_session hook"""
     _session.hooks['response'].append(_session.cache_session)
     logger.debug(f'cache_session hook added')
