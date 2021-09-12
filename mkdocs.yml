@@ -22,6 +22,7 @@ markdown_extensions:
   - meta
   - codehilite
   - smarty
+  - admonition
   - sane_lists
 
 plugins:

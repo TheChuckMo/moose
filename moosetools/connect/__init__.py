@@ -1,33 +1,19 @@
-"""moose connect"""
+"""MooseTools connect"""
 import copy
-import os
-from base64 import b64encode
-
-from requests_toolbelt import user_agent
-from requests.utils import add_dict_to_cookiejar
 import logging
+from base64 import b64encode
+from typing import Mapping, List, Any
 
-from moosetools import __app__, __version__
-from moosetools.connect import headers
-from moosetools.connect.sessions import AppSession
+from . import headers
+from .sessions import AppSession
 
-"""default logger"""
 logger = logging.getLogger(__name__)
 
-"""default directory to store cookies and other cache"""
-_default_store_: os.path = os.getcwd()
 
-"""user-agent for connection"""
-_user_agent_header_: dict = {'User-Agent': user_agent(__app__, __version__)}
-
-"""default list of keys to cache"""
-_default_session_keys_: list = ['Authorization']
-
-
-def connect_json_app(base_url: str, username: str = None, password: str = None, force_basic: bool = False,
-                     session_cookies: dict = None, session_headers: dict = None, session_params: dict = None, session_keys: list = None,
-                     store: os.path = _default_store_) -> AppSession:
-    """create app session with base_url of api server
+def connect_json(base_url: str, username: str = None, password: str = None, force_basic: bool = False,
+                 session_cookies: Mapping = None, session_headers: Mapping = None, session_params: Mapping = None,
+                 session_keys: List[Any] = None, store: str = None) -> AppSession:
+    """create session with base_url of api server
 
     Parameters
     ----------
@@ -45,50 +31,85 @@ def connect_json_app(base_url: str, username: str = None, password: str = None, 
     -------
     AppSession
     """
-    _session = copy.deepcopy(AppSession)(base_url=base_url, app=__app__, store=store)
+    _session = copy.deepcopy(AppSession)(base_url=base_url, store=store)
 
-    """update user agent header"""
-    _session.headers.update(_user_agent_header_)
-    logger.debug(f'add user_agent_header: {_session.headers}')
+    update_session_headers(_session, headers=headers.json_content_accept)
+    """update content-type and accept headers"""
 
-    """add json headers"""
-    _session.headers.update(headers.json_content_accept)
-    logger.debug(f'add json headers: {_session.headers}')
-
-    """add session params"""
     if (session_params is not None) and (len(session_params) > 0):
         _session.params.update(session_params)
-        logger.debug(f'add session params: {_session.params}')
+        logger.debug(f'update session params: {session_params}')
 
-    """add session headers"""
+    logger.info(f'init session params')
+
     if (session_headers is not None) and (len(session_headers) > 0):
         _session.headers.update(session_headers)
-        logger.debug(f'add session headers: {_session.headers}')
+        logger.debug(f'update session headers: {session_headers}')
 
-    """add session cookies"""
+    logger.info(f'init session headers')
+
     if (session_cookies is not None) and (len(session_cookies) > 0):
         _session.cookies.update(session_cookies)
-        logger.debug(f'add session cookies: {_session.cookies.get_dict()}')
+        logger.debug(f'update session cookies: {session_cookies}')
 
-    """session keys in headers or params to save"""
-    if (session_keys is not None) and (type(session_keys) is list):
+    logger.info(f'init session cookies')
+
+    if session_keys:
         _session.session_keys = session_keys
-        logger.info(f'session search keys: {_session.unique_session_keys}')
+        logger.info(f'session search keys: {session_keys}')
 
-    """set basic authentication"""
-    if (username is not None) and (password is not None):
-        _session.auth = (username, password)
-        logger.debug(f'basic auth for {username}')
-        if force_basic:
-            _basic_auth = b64encode(f'{username}:{password}')
-            _session.headers.update({'Authentication': f'Basic {_basic_auth}'})
-            logger.debug(f'force basic auth for {username}')
+    logger.info(f'init session search keys')
 
-    logger.info(f'init session params: {_session.params}')
-    logger.info(f'init session headers: {_session.headers}')
-    logger.info(f'init session cookies: {_session.cookies.get_dict()}')
-    """add cache_session hook"""
-    _session.hooks['response'].append(_session.cache_session)
-    logger.debug(f'cache_session hook added')
+    if username and password:
+        set_session_basic_authentication(_session, force_basic=force_basic, username=username, password=password)
 
     return _session
+
+
+def update_session_params(session: AppSession, params: Mapping) -> None:
+    """add session params"""
+    if (params is not None) and (len(params) > 0):
+        session.params.update(params)
+        logger.debug(f'add session params: {params}')
+
+
+def update_session_cookies(session: AppSession, cookies: Mapping) -> None:
+    """add session cookies"""
+    if (cookies is not None) and (len(cookies) > 0):
+        session.cookies.update(cookies)
+        logger.debug(f'update session cookies: {cookies}')
+
+
+def update_session_headers(session: AppSession, headers: Mapping) -> None:
+    """add session headers"""
+    if (headers is not None) and (len(headers) > 0):
+        session.headers.update(headers)
+        logger.debug(f'update session headers: {headers}')
+
+
+def set_session_search_keys(session: AppSession, keys: List[Any]) -> None:
+    """session search keys in headers or params to save"""
+    if (keys is not None) and (type(keys) is list):
+        session.session_keys = keys
+        logger.info(f'session search keys: {session.session_keys}')
+
+
+def set_session_basic_authentication(session: AppSession, username: str = None, password: str = None,
+                                     force_basic: bool = False) -> None:
+    """set basic authentication for session
+
+    Parameters
+    ----------
+    session
+    force_basic
+    username
+    password
+    """
+    if (username is not None) and (password is not None):
+        session.auth = (username, password)
+        logger.debug(f'basic auth for {username}')
+        if force_basic:
+            _basic_auth: bytes = b64encode(f'{username}:{password}'.encode())
+            _basic_auth_header: Mapping = {'Authentication': f'Basic {_basic_auth}'.encode()}
+            session.headers.update(_basic_auth_header)
+            logger.debug(f'force basic auth for {username}')

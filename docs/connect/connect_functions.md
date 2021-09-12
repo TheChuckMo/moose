@@ -5,8 +5,9 @@
 ## Create connect
 
 ```python
-from moosetools.connect import connect_json_app
-cnt = connect_json_app('https://smoawx.ohsu.edu', username='user', password='pass')
+from moosetools.connect import connect_json
+
+cnt = connect_json('https://smoawx.ohsu.edu', username='user', password='pass')
 ```
 
 ::: moosetools.connect.connect_json_app

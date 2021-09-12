@@ -1,20 +1,22 @@
+"""MooseTools connect headers"""
+from typing import Mapping
 
-"""Content-Type and accept headers for json"""
-json_content_accept = {
+json_content_accept: Mapping = {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
 }
+"""Content-Type and accept headers for json"""
 
 """Content-Type headers"""
-json_content = {'Content-Type': 'application/json'}
-form_urlencoded_content = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+json_content: Mapping = {'Content-Type': 'application/json'}
+form_urlencoded_content: Mapping = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
 
 """Accept headers"""
-json_accept = {'Accept': 'application/json'}
-text_accept = {'Accept': 'text/plain'}
-html_accept = {'Accept': 'text/html'}
-xml_accept = {'Accept': 'application/xml'}
+json_accept: Mapping = {'Accept': 'application/json'}
+text_accept: Mapping = {'Accept': 'text/plain'}
+html_accept: Mapping = {'Accept': 'text/html'}
+xml_accept: Mapping = {'Accept': 'application/xml'}
 
 
 """header for Atlassian to not check token"""
-no_check_atlassian_token = {'X-Atlassian-Token': 'no-check'}
+no_check_atlassian_token: Mapping = {'X-Atlassian-Token': 'no-check'}

@@ -14,12 +14,14 @@ classifiers = [ "Topic :: Software Development :: Libraries :: Python Modules" ]
 python = "^3.6"
 requests = "^2"
 requests-toolbelt = "^0.9.1"
+pip = "^21.2.4"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5"
-mkdocs = "^1"
-mkdocs-material = "^7"
-mkdocstrings = "^0.15"
+mkdocs = "^1.2.2"
+pytest = "^6.2.5"
+mkdocs-material = "^7.2.6"
+mkdocstrings = "^0.15.2"
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

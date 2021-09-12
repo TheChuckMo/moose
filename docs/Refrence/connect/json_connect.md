@@ -1,6 +1,6 @@
-# class AppSession
+# func connect_json_app
 
-::: moosetools.connect.sessions.AppSession
+::: moosetools.connect.connect_json_api
     handler: python
     rendering:
       show_root_heading: true
