@@ -28,9 +28,9 @@ def test_app_session_keys():
     assert cnt.session_keys == session_keys
 
 
-def test_app_session_hooks():
-    cnt = AppSession(base_url, session_keys=session_keys)
-    assert len(cnt.hooks['response']) == 1
+# def test_app_session_hooks():
+#     cnt = AppSession(base_url, session_keys=session_keys)
+#     assert len(cnt.hooks['response']) == 1
 
 
 def test_app_session_user_agent():

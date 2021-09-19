@@ -61,8 +61,8 @@ class AppSession(Session):
         self.set_user_agent()
         """set user agent header to session"""
 
-        self.hooks['response'].append(self._cache_session)
-        """add cache_session hook to session"""
+        # self.hooks['response'].append(self._cache_session)
+        # """add cache_session hook to session"""
 
         self._reload_session()
         """reload cached session"""

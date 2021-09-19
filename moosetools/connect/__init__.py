@@ -10,7 +10,7 @@ from .sessions import AppSession
 logger = logging.getLogger(__name__)
 
 
-def connect_json(base_url: str, username: str = None, password: str = None, force_basic: bool = False,
+def connect_json(base_url: str, username: str = None, password: str = None, token: str = None, force_basic: bool = False,
                  session_cookies: Mapping = None, session_headers: Mapping = None, session_params: Mapping = None,
                  session_keys: List[Any] = None, store: str = None) -> AppSession:
     """create session with base_url of api server
@@ -20,6 +20,7 @@ def connect_json(base_url: str, username: str = None, password: str = None, forc
     base_url
     username
     password
+    token
     force_basic
     session_cookies
     session_headers
@@ -58,10 +59,15 @@ def connect_json(base_url: str, username: str = None, password: str = None, forc
         _session.session_keys = session_keys
         logger.info(f'session search keys: {session_keys}')
 
-    logger.info(f'init session search keys')
+    logger.info('init session search keys')
 
     if username and password:
         set_session_basic_authentication(_session, force_basic=force_basic, username=username, password=password)
+        logger.info('session basic authentication')
+
+    if token:
+        set_session_token_authorization(_session, token=token)
+        logger.info('token bearer authorization')
 
     return _session
 
@@ -110,6 +116,21 @@ def set_session_basic_authentication(session: AppSession, username: str = None, 
         logger.debug(f'basic auth for {username}')
         if force_basic:
             _basic_auth: bytes = b64encode(f'{username}:{password}'.encode())
-            _basic_auth_header: Mapping = {'Authentication': f'Basic {_basic_auth}'.encode()}
+            _basic_auth_header: Mapping = {'Authentication': f'Basic {_basic_auth}'.encode('ASCII')}
             session.headers.update(_basic_auth_header)
             logger.debug(f'force basic auth for {username}')
+
+
+def set_session_token_authorization(session: AppSession, token: str = None) -> None:
+    """set token bearer authorization for session
+
+    Parameters
+    ----------
+    session
+    token
+    """
+    if token is not None:
+        #_auth_token: bytes = b64encode(token.encode())
+        _auth_token_header: Mapping = {'Authorization': f'Bearer {token}'}
+        session.headers.update(_auth_token_header)
+        logger.debug(f'Authorization: Bearer  {token}')
